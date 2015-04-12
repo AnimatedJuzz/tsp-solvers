@@ -58,6 +58,16 @@ const Graph::Vertex& Graph::getVertex(int pos) {
 	return *(this->graph[pos][0].startVertex);
 }
 
+const std::vector<Graph::Edge> Graph::getEdgesFromVertex(const Vertex& vertex) {
+	std::vector<Graph::Edge> edges;
+	for (auto edge : this->graph[vertex.pos])
+	{
+		if (edge.distance != 0)
+			edges.push_back(edge);
+	}
+	return edges;
+}
+
 void Graph::deleteVertex(const Vertex& vertex) {
 
 	try {

@@ -37,7 +37,7 @@ public:
 	void addEdge(int distance, const Vertex& startVertex, const Vertex& endVertex);
 	void changeEdgeWeight(int newDistance, const Vertex& startVertex, const Vertex& endVertex);
 	const Graph::Vertex& getVertex(int pos);
-	const Graph::Edge& getEdgesFromVertex(const Vertex& vertex);
+	const std::vector<Graph::Edge> getEdgesFromVertex(const Vertex& vertex);
 	void deleteVertex(const Vertex& vertex);
 	void deleteEdge(const Vertex& startVertex, const Vertex& endVertex);
 	void printGraph();
