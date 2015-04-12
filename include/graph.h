@@ -42,7 +42,7 @@ public:
 	void deleteEdge(const Vertex& startVertex, const Vertex& endVertex);
 	void printGraph();
 	const Graph::Vertex& searchByName(const std::string name);
-private:
+protected:
 	std::vector< std::vector<Edge> > graph;
 	std::map< std::string, int* > search;
 	std::vector<std::unique_ptr< Graph::Vertex > > vertices;
