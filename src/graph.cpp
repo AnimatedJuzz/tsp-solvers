@@ -2,15 +2,17 @@
 
 Graph::Graph() : graph(), search(), numVertices(0) { }
 
-Graph::Graph(int numVertices) : graph(), search(), numVertices(numVertices) {
+Graph::Graph(int numVertices) :
+		graph(),
+		search(),
+		numVertices(numVertices),
+		vertices(numVertices) {
 	this->graph.resize(numVertices);
 
-	this->vertices = std::unique_ptr< std::vector< Graph::Vertex > >
-		(new std::vector<Graph::Vertex>(numVertices));
 	for (int i = 0; i < numVertices; i++)
 	{
-		(*vertices)[i] = Graph::Vertex(i);
-		this->search[(*vertices)[i].name] = (*vertices)[i];
+		vertices[i] = std::unique_ptr<Graph::Vertex>(new Graph::Vertex(i));
+		this->search[vertices[i]->name] = &(vertices[i]->pos);
 	}
 
 	for (int i = 0; i < numVertices; i++)
@@ -18,12 +20,13 @@ Graph::Graph(int numVertices) : graph(), search(), numVertices(numVertices) {
 		this->graph[i].resize(numVertices);
 
 		for (int j = 0; j < numVertices; j++)
-			this->graph[i][j] = Edge(0, &((*vertices)[i]), &((*vertices)[j]));
+			this->graph[i][j] = Edge(0, vertices[i].get(), vertices[j].get());
 	}
 }
 
 void Graph::addVertex(const Vertex& vertex) {
-	Graph::Vertex* actualVertex = new Graph::Vertex(vertex);
+	this->vertices.push_back(std::unique_ptr<Graph::Vertex>(new Graph::Vertex(vertex)));
+	Graph::Vertex* actualVertex = this->vertices.back().get();
 	actualVertex->pos = numVertices++;
 
 	this->graph.push_back(std::vector<Graph::Edge>(numVertices));
@@ -39,7 +42,7 @@ void Graph::addVertex(const Vertex& vertex) {
 			this->graph[i].push_back(Edge(0, startVertex, actualVertex));
 	}
 
-	this->search[vertex.name] = *actualVertex;
+	this->search[vertex.name] = &(actualVertex->pos);
 }
 
 void Graph::addEdge(int distance, const Vertex& startVertex, const Vertex& endVertex) {
@@ -70,6 +73,7 @@ void Graph::deleteVertex(const Vertex& vertex) {
 	}
 
 	numVertices--;
+	this->vertices.erase(this->vertices.begin() + vertex.pos);
 }
 
 void Graph::deleteEdge(const Vertex& startVertex, const Vertex& endVertex) {
@@ -95,5 +99,5 @@ void Graph::printGraph() {
 }
 
 const Graph::Vertex& Graph::searchByName(const std::string name) {
-	return this->search[name];
+	return *(this->vertices[*(this->search[name])]);
 }

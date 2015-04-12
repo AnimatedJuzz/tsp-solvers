@@ -43,8 +43,8 @@ public:
 	const Graph::Vertex& searchByName(const std::string name);
 private:
 	std::vector< std::vector<Edge> > graph;
-	std::map< std::string, Vertex > search;
-	std::unique_ptr< std::vector<Graph::Vertex> > vertices;
+	std::map< std::string, int* > search;
+	std::vector<std::unique_ptr< Graph::Vertex > > vertices;
 	int numVertices;
 };
 #endif // GRAPH_H
