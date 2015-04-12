@@ -50,6 +50,10 @@ void Graph::addEdge(int distance, const Vertex& startVertex, const Vertex& endVe
 	this->graph[endVertex.pos][startVertex.pos].distance = distance;
 }
 
+void Graph::changeEdgeWeight(int newDistance, const Vertex& startVertex, const Vertex& endVertex) {
+	this->addEdge(newDistance, startVertex, endVertex);
+}
+
 const Graph::Vertex& Graph::getVertex(int pos) {
 	return *(this->graph[pos][0].startVertex);
 }

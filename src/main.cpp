@@ -8,5 +8,6 @@ int main() {
 	const Graph::Vertex& deleteVertex = graph.getVertex(3);
 	graph.deleteVertex(deleteVertex);
 	graph.deleteEdge(graph.searchByName("A"), graph.searchByName("F"));
+	graph.changeEdgeWeight(7, graph.searchByName("B"), graph.searchByName("C"));
 	graph.printGraph();
 }

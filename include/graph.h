@@ -35,6 +35,7 @@ public:
 	Graph(int numVertices);
 	void addVertex(const Vertex& vertex);
 	void addEdge(int distance, const Vertex& startVertex, const Vertex& endVertex);
+	void changeEdgeWeight(int newDistance, const Vertex& startVertex, const Vertex& endVertex);
 	const Graph::Vertex& getVertex(int pos);
 	const Graph::Edge& getEdgesFromVertex(const Vertex& vertex);
 	void deleteVertex(const Vertex& vertex);
