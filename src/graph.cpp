@@ -5,11 +5,12 @@ Graph::Graph() : graph(), search(), numVertices(0) { }
 Graph::Graph(int numVertices) : graph(), search(), numVertices(numVertices) {
 	this->graph.resize(numVertices);
 
-	Graph::Vertex* vertices = new Graph::Vertex[5];
+	this->vertices = std::unique_ptr< std::vector< Graph::Vertex > >
+		(new std::vector<Graph::Vertex>(numVertices));
 	for (int i = 0; i < numVertices; i++)
 	{
-		vertices[i] = Graph::Vertex(i);
-		this->search[vertices[i].name] = vertices[i];
+		(*vertices)[i] = Graph::Vertex(i);
+		this->search[(*vertices)[i].name] = (*vertices)[i];
 	}
 
 	for (int i = 0; i < numVertices; i++)
@@ -17,7 +18,7 @@ Graph::Graph(int numVertices) : graph(), search(), numVertices(numVertices) {
 		this->graph[i].resize(numVertices);
 
 		for (int j = 0; j < numVertices; j++)
-			this->graph[i][j] = Edge(0, &(vertices[i]), &(vertices[j]));
+			this->graph[i][j] = Edge(0, &((*vertices)[i]), &((*vertices)[j]));
 	}
 }
 
@@ -71,9 +72,9 @@ void Graph::deleteVertex(const Vertex& vertex) {
 	numVertices--;
 }
 
-void Graph::deleteEdge(const Edge& edge) {
-	this->graph[edge.startVertex->pos][edge.endVertex->pos].distance = 0;
-	this->graph[edge.endVertex->pos][edge.startVertex->pos].distance = 0;
+void Graph::deleteEdge(const Vertex& startVertex, const Vertex& endVertex) {
+	this->graph[startVertex.pos][endVertex.pos].distance = 0;
+	this->graph[endVertex.pos][startVertex.pos].distance = 0;
 }
 
 // Start vertex is defined on the left; on the top is end vertex

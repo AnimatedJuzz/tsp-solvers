@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <memory>
 #include <string>
 
 static char DEFAULT_NAME = 'A';
@@ -37,12 +38,13 @@ public:
 	const Graph::Vertex& getVertex(int pos);
 	const Graph::Edge& getEdgesFromVertex(const Vertex& vertex);
 	void deleteVertex(const Vertex& vertex);
-	void deleteEdge(const Edge& edge);
+	void deleteEdge(const Vertex& startVertex, const Vertex& endVertex);
 	void printGraph();
 	const Graph::Vertex& searchByName(const std::string name);
 private:
 	std::vector< std::vector<Edge> > graph;
-	std::map<std::string, Vertex> search;
+	std::map< std::string, Vertex > search;
+	std::unique_ptr< std::vector<Graph::Vertex> > vertices;
 	int numVertices;
 };
 #endif // GRAPH_H
