@@ -98,16 +98,15 @@ void Graph::deleteEdge(const Vertex& startVertex, const Vertex& endVertex) {
 // Start vertex is defined on the left; on the top is end vertex
 // Start vertex is the row, end vertex is the column
 void Graph::printGraph() {
-	std::string topAxis = " ";
 	for (auto row : this->graph)
-		topAxis += row[0].startVertex->name;
-	std::cout << topAxis << std::endl;
+		std::cout << std::setw(INDENT) << row[0].startVertex->name;
+	std::cout << std::endl;
 
 	for (auto row : this->graph)
 	{
 		std::cout << row[0].startVertex->name;
 		for (auto edge : row)
-			std::cout << edge.distance;
+			std::cout << std::setw(INDENT) << (int) edge.distance;
 		std::cout << std::endl;
 	}
 }

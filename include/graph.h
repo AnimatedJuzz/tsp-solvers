@@ -2,12 +2,14 @@
 #define GRAPH_H
 
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <map>
 #include <memory>
 #include <string>
 
 static char DEFAULT_NAME = 'A';
+const int INDENT = 4;
 
 class Graph {
 

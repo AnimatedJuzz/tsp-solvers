@@ -163,6 +163,30 @@ src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/TSPRunner.dir/build.make CMakeFiles/TSPRunner.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/tour.o: src/tour.cpp.o
+.PHONY : src/tour.o
+
+# target to build an object file
+src/tour.cpp.o:
+	$(MAKE) -f CMakeFiles/TSPRunner.dir/build.make CMakeFiles/TSPRunner.dir/src/tour.cpp.o
+.PHONY : src/tour.cpp.o
+
+src/tour.i: src/tour.cpp.i
+.PHONY : src/tour.i
+
+# target to preprocess a source file
+src/tour.cpp.i:
+	$(MAKE) -f CMakeFiles/TSPRunner.dir/build.make CMakeFiles/TSPRunner.dir/src/tour.cpp.i
+.PHONY : src/tour.cpp.i
+
+src/tour.s: src/tour.cpp.s
+.PHONY : src/tour.s
+
+# target to generate assembly for a file
+src/tour.cpp.s:
+	$(MAKE) -f CMakeFiles/TSPRunner.dir/build.make CMakeFiles/TSPRunner.dir/src/tour.cpp.s
+.PHONY : src/tour.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -178,6 +202,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/tour.o"
+	@echo "... src/tour.i"
+	@echo "... src/tour.s"
 .PHONY : help
 
 

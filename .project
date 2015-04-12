@@ -139,6 +139,11 @@
 			<location>/home/srinivas/Programming/TSP/code/src/graph.cpp</location>
 		</link>
 		<link>
+			<name>[Targets]/[exe] TSPRunner/Source Files/tour.cpp</name>
+			<type>1</type>
+			<location>/home/srinivas/Programming/TSP/code/src/tour.cpp</location>
+		</link>
+		<link>
 			<name>[Targets]/[exe] TSPRunner/Source Files/main.cpp</name>
 			<type>1</type>
 			<location>/home/srinivas/Programming/TSP/code/src/main.cpp</location>
