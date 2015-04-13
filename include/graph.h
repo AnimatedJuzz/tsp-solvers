@@ -28,6 +28,9 @@ public:
 		Edge(double distance) : distance(distance), startVertex(), endVertex() {};
 		Edge(double distance, Vertex* startVertex, Vertex* endVertex) :
 			distance(distance), startVertex(startVertex), endVertex(endVertex) {};
+
+		bool operator<(const Edge &rhs) const { return this->distance < rhs.distance; }
+
 		double distance;
 		Vertex* startVertex;
 		Vertex* endVertex;
