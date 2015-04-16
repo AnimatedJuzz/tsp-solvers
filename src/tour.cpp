@@ -35,7 +35,7 @@ Tour::Tour(int numCities) : Graph(numCities) {
 std::vector< Graph::Edge > Tour::solveRandom() {
 	std::vector<Graph::Edge> tempSolution;
 	std::vector<Graph::Edge> optimalSolution;
-	double optimalDistance = this->getTourLength(tempSolution);
+	double optimalDistance = 1000000000;
 
 	for (int i = 0; i < 10000; i++)
 	{
@@ -48,7 +48,7 @@ std::vector< Graph::Edge > Tour::solveRandom() {
 		}
 	}
 
-	return tempSolution;
+	return optimalSolution;
 }
 
 std::vector< Graph::Edge > Tour::getRandomPath() {
