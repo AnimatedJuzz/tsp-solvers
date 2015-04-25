@@ -3,8 +3,17 @@ SET(CMAKE_BUILD_TYPE "Debug")
 project (TSP)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(EXECUTABLE_NAME "TSPRunner")
 
 include_directories("${PROJECT_BINARY_DIR}/include")
 
 add_executable(TSPRunner src/graph.cpp src/tour.cpp src/main.cpp)
-target_compile_features(TSPRunner PRIVATE cxx_range_for)
+
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+find_package(SFML 2 REQUIRED system window graphics network audio)
+if(SFML_FOUND)
+  include_directories(${SFML_INCLUDE_DIR})
+  target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES})
+endif()
+
+target_compile_features(${EXECUTABLE_NAME} PRIVATE cxx_range_for)
