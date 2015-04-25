@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
 	std::cout << std::endl;
 	std::vector< Graph::Edge > randomSolution = tour->solveRandom();
 	std::vector< Graph::Edge > twoOptSolution = tour->solveRandomWithSwitches(3500.0, 500);
-	std::vector< Graph::Edge > simulatedAnnealingSolution = tour->solveSimulatedAnnealing(10000.0, 20, 1);
+	std::vector< Graph::Edge > simulatedAnnealingSolution = tour->solveSimulatedAnnealing(20000.0, 20, 0.1);
 
 	std::cout << std::endl << "Random Solution: " << std::endl;
 
