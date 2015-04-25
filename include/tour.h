@@ -18,8 +18,14 @@ public:
 	double getTourLength(std::vector< Graph::Edge >& tour);
 
 	std::vector< Graph::Edge > solveRandom();
+	std::vector< Graph::Edge > solveRandomWithSwitches(double maxLength, int maxTries);
+	std::vector< Graph::Edge > solveSimulatedAnnealing(double initialTemp, double finalTemp, double tempLoss);
+
+	static void printPath(const std::vector< Graph::Edge > path);
 private:
 	std::vector< Graph::Edge > getRandomPath();
+	std::pair<int, int> pickRand(int size);
+	std::vector< Graph::Edge > swap(const std::vector< Graph::Edge >& tour, int firstVertex, int secondVertex);
 };
 
 #endif // TOUR_H
