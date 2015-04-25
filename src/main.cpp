@@ -3,16 +3,20 @@
 #include "tour.h"
 
 int main() {
-	Tour tour(10);
+	Tour tour(100);
 	tour.printGraph();
-	//std::vector< Graph::Edge > solution = tour.solveRandom();
 	std::cout << std::endl;
-	//std::vector< Graph::Edge > solution = tour.solveRandomWithSwitches(3500.0, 500);
-	std::vector< Graph::Edge > solution = tour.solveSimulatedAnnealing(6000.0, 20, 1);
+	std::vector< Graph::Edge > twoOptSolution = tour.solveRandomWithSwitches(3500.0, 500);
+	std::vector< Graph::Edge > simulatedAnnealingSolution = tour.solveSimulatedAnnealing(6000.0, 20, 1);
 
-	std::cout << std::endl << "Simulated Annealing: " << std::endl;
+	std::cout << std::endl << "2-Opt Solution: " << std::endl;
 
-	Tour::printPath(solution);
+	Tour::printPath(twoOptSolution);
 
-	std::cout << std::endl << "Tour length: " << tour.getTourLength(solution) << std::endl;
+	std::cout << std::endl << "Simulated Annealing Solution: " << std::endl;
+
+	Tour::printPath(simulatedAnnealingSolution);
+
+	std::cout << std::endl << "2-Opt Tour length: " << tour.getTourLength(twoOptSolution) << std::endl;
+	std::cout << "Simulated Annealing Solution: " << tour.getTourLength(simulatedAnnealingSolution) << std::endl;
 }

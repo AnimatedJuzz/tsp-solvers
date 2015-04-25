@@ -57,8 +57,8 @@ std::vector< Graph::Edge > Tour::solveRandomWithSwitches(double maxLength, int m
 
 	int tries = 0;
 
-	std::cout << "Original path: ";
-	Tour::printPath(tempSolution);
+	//std::cout << "Original path: ";
+	//Tour::printPath(tempSolution);
 
 	while (tourLength > maxLength && ++tries <= maxTries)
 	{
@@ -69,9 +69,9 @@ std::vector< Graph::Edge > Tour::solveRandomWithSwitches(double maxLength, int m
 		{
 			tourLength = newTourLength;
 			tempSolution = newSolution;
-			std::cout << "Attempt #" << tries << " found more optimal path of length " << newTourLength << std::endl;
+			//std::cout << "Attempt #" << tries << " found more optimal path of length " << newTourLength << std::endl;
 		}
-		std::cout << "Try #" << tries << ": "; Tour::printPath(tempSolution);
+		//std::cout << "Try #" << tries << ": "; Tour::printPath(tempSolution);
 	}
 
 	return tempSolution;
@@ -91,14 +91,14 @@ std::vector< Graph::Edge > Tour::solveSimulatedAnnealing(double initialTemp, dou
 		{
 			tourLength = newTourLength;
 			tempSolution = newSolution;
-			std::cout << "Temp " << currentTemperature << " found more optimal path of length " << newTourLength << std::endl;
-			Tour::printPath(tempSolution);
+			//std::cout << "Temp " << currentTemperature << " found more optimal path of length " << newTourLength << std::endl;
+			//Tour::printPath(tempSolution);
 		}
 
 		currentTemperature -= tempLoss;
 	}
 
-	std::cout << "Final tour length of " << this->getTourLength(tempSolution) << std::endl;
+	//std::cout << "Final tour length of " << this->getTourLength(tempSolution) << std::endl;
 	return tempSolution;
 }
 
