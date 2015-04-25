@@ -65,6 +65,7 @@ public:
 
 	Graph();
 	Graph(int numVertices);
+	virtual ~Graph() { };
 	void addVertex(const Vertex& vertex);
 	void addEdge(int distance, const Vertex& startVertex, const Vertex& endVertex);
 	void changeEdgeWeight(int newDistance, const Vertex& startVertex, const Vertex& endVertex);
