@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <vector>
 #include <map>
+#include <cmath>
 #include <memory>
 #include <string>
 
@@ -14,8 +15,7 @@ const static char START_VAL = 'A';
 const static char MAX_VAL = 'z';
 const static int DEFAULT_SIZE = 3;
 
-static int CURRENT_SIZE = 0;
-static char CURRENT_VAL = START_VAL;
+static int CURRENT_VAL = 0;
 
 class Graph {
 
@@ -30,12 +30,19 @@ public:
 
 		Name(std::string a) : val(a) { };
 		Name() : val() {
-			if (CURRENT_VAL < MAX_VAL)
+			/*if (CURRENT_VAL < MAX_VAL)
 				val = Name(std::string(CURRENT_SIZE, MAX_VAL)+std::string(1, CURRENT_VAL++)).val;
 			else
 			{
 				val = Name(std::string(CURRENT_SIZE++, MAX_VAL) + std::string(1, START_VAL)).val;
 				CURRENT_VAL = START_VAL;
+			}*/
+
+			int remainder = CURRENT_VAL++;
+			for (int i = DEFAULT_SIZE - 1; i >= 0; i--)
+			{
+				val += ((char) START_VAL + (remainder / (pow(26.0, i))) );
+				remainder %= ((int) pow(26.0, i));
 			}
 		};
 
