@@ -37,7 +37,7 @@ std::vector< Graph::Edge > Tour::solveRandom() {
 	std::vector<Graph::Edge> optimalSolution;
 	double optimalDistance = 1000000000;
 
-	for (int i = 0; i < 10000; i++)
+	for (int i = 0; i < 1000; i++)
 	{
 		tempSolution = this->getRandomPath();
 		double tourLength = this->getTourLength(tempSolution);
