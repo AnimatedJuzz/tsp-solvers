@@ -8,9 +8,7 @@
 #include <memory>
 #include <string>
 
-static char DEFAULT_NAME = 'A';
 const int INDENT = 4;
-
 
 const static char START_VAL = 'A';
 const static char MAX_VAL = 'z';
