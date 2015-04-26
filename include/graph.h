@@ -78,4 +78,7 @@ protected:
 	std::vector<std::unique_ptr< Graph::Vertex > > vertices;
 	int numVertices;
 };
+
+typedef std::vector< Graph::Edge > path;
+
 #endif // GRAPH_H

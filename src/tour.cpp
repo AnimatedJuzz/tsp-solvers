@@ -10,26 +10,33 @@
 Tour::Tour() : Graph() { }
 
 Tour::Tour(int numCities) : Graph(numCities), currentTour(new path) {
-	std::vector< std::pair<double, double> > cities(0);
+	std::vector< CityLocation > cities(0);
 
 	// Create random cities
 	srand (SEED);
 	double multiplier = MAX_DIST_CITY - MIN_DIST_CITY;
 	for (int index = 0; index < numCities; index++)
-		cities.push_back(std::make_pair(MIN_DIST_CITY + ((double) rand() / RAND_MAX) * multiplier,
+	{
+		CityLocation location = std::make_pair(this->vertices[index]->name, sf::Vector2f(
+				MIN_DIST_CITY + ((double) rand() / RAND_MAX) * multiplier,
 				MIN_DIST_CITY + ((double) rand() / RAND_MAX) * multiplier));
+		cities.push_back(location);
+	}
 
 	// Populate graph with their distances
 	for (auto startCity = cities.begin(); startCity < cities.end(); startCity++)
 	{
 		for (auto endCity = startCity + 1; endCity < cities.end(); endCity++)
 		{
-			double distance = std::sqrt(std::pow(endCity->first - startCity->first, 2) +
-					std::pow(endCity->second - startCity->second, 2));
+			double distance = std::sqrt(std::pow(endCity->second.x - startCity->second.x, 2) +
+					std::pow(endCity->second.y - startCity->second.y, 2));
 			this->changeEdgeWeight(distance, this->getVertex(startCity - cities.begin()),
 					this->getVertex(endCity - cities.begin()));
 		}
 	}
+
+	this->display = std::unique_ptr< Display > (new Display(cities, this->currentTour));
+	this->displayThread = std::unique_ptr< std::thread > (new std::thread(&Display::loop, std::ref( *(this->display) )));
 }
 
 path Tour::solveRandom() {
@@ -87,16 +94,26 @@ path Tour::solveSimulatedAnnealing(double initialTemp, double finalTemp, double 
 			this->currentTour = std::make_shared< path > (newSolution);
 		}
 
+		updateDisplay(currentTemperature, tourLength);
 		currentTemperature -= tempLoss;
 	}
 
 	return path(*(this->currentTour));
 }
 
+std::shared_ptr< path > Tour::getCurrentTour() {
+	return this->currentTour;
+}
+
 void Tour::printPath(const path path) {
 	for (Graph::Edge edge : path)
 			std::cout << edge.startVertex->name << "->" << edge.endVertex->name << " ";
 	std::cout << std::endl;
+}
+
+Tour::~Tour() {
+	if (this->display.get() != NULL)
+		this->display->kill();
 }
 
 path Tour::getRandomPath() {
@@ -162,3 +179,8 @@ path Tour::swap(const path& tour, int firstVertex, int secondVertex) {
 	return route1;
 }
 
+void Tour::updateDisplay(double temperature, double distance) {
+	this->display->setCurrentTour(this->getCurrentTour());
+	this->display->temperature = temperature;
+	this->display->distance = distance;
+}
