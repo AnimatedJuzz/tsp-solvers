@@ -101,8 +101,12 @@ path Tour::solveSimulatedAnnealing(double initialTemp, double finalTemp, double 
 	return path(*(this->currentTour));
 }
 
-std::shared_ptr< path > Tour::getCurrentTour() {
+std::shared_ptr< path >& Tour::getCurrentTour() {
 	return this->currentTour;
+}
+
+const std::unique_ptr<std::thread>& Tour::getDisplayThread() const {
+	return displayThread;
 }
 
 void Tour::printPath(const path path) {

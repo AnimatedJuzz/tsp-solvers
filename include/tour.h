@@ -25,9 +25,11 @@ public:
 	path solveRandomWithSwitches(double maxLength, int maxTries);
 	path solveSimulatedAnnealing(double initialTemp, double finalTemp, double tempLoss);
 
-	std::shared_ptr< path > getCurrentTour();
+	std::shared_ptr< path >& getCurrentTour();
+	const std::unique_ptr<std::thread>& getDisplayThread() const;
 
 	static void printPath(const path path);
+
 private:
 	path getRandomPath();
 	std::pair<int, int> pickRand(int size);
