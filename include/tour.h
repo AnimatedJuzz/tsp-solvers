@@ -10,6 +10,8 @@ const double MIN_DIST_CITY = 100.0;
 
 const long SEED = 42;
 
+typedef std::vector< Graph::Edge > edges;
+
 class Tour: public Graph {
 public:
 	Tour();
@@ -17,15 +19,17 @@ public:
 
 	double getTourLength(std::vector< Graph::Edge >& tour);
 
-	std::vector< Graph::Edge > solveRandom();
-	std::vector< Graph::Edge > solveRandomWithSwitches(double maxLength, int maxTries);
-	std::vector< Graph::Edge > solveSimulatedAnnealing(double initialTemp, double finalTemp, double tempLoss);
+	edges solveRandom();
+	edges solveRandomWithSwitches(double maxLength, int maxTries);
+	edges solveSimulatedAnnealing(double initialTemp, double finalTemp, double tempLoss);
 
 	static void printPath(const std::vector< Graph::Edge > path);
 private:
-	std::vector< Graph::Edge > getRandomPath();
+	edges getRandomPath();
 	std::pair<int, int> pickRand(int size);
-	std::vector< Graph::Edge > swap(const std::vector< Graph::Edge >& tour, int firstVertex, int secondVertex);
+	edges swap(const std::vector< Graph::Edge >& tour, int firstVertex, int secondVertex);
+
+	std::shared_ptr< edges > currentTour;
 };
 
 #endif // TOUR_H

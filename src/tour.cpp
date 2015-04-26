@@ -9,7 +9,7 @@
 
 Tour::Tour() : Graph() { }
 
-Tour::Tour(int numCities) : Graph(numCities) {
+Tour::Tour(int numCities) : Graph(numCities), currentTour(new edges) {
 	std::vector< std::pair<double, double> > cities(0);
 
 	// Create random cities
@@ -32,9 +32,8 @@ Tour::Tour(int numCities) : Graph(numCities) {
 	}
 }
 
-std::vector< Graph::Edge > Tour::solveRandom() {
+edges Tour::solveRandom() {
 	std::vector<Graph::Edge> tempSolution;
-	std::vector<Graph::Edge> optimalSolution;
 	double optimalDistance = 1000000000;
 
 	for (int i = 0; i < 1000; i++)
@@ -44,62 +43,54 @@ std::vector< Graph::Edge > Tour::solveRandom() {
 		if (tourLength < optimalDistance)
 		{
 			optimalDistance = tourLength;
-			optimalSolution = tempSolution;
+			this->currentTour = std::make_shared< edges > (tempSolution);
 		}
 	}
 
-	return optimalSolution;
+	return edges(*(this->currentTour));
 }
 
-std::vector< Graph::Edge > Tour::solveRandomWithSwitches(double maxLength, int maxTries) {
-	std::vector< Graph::Edge > tempSolution = this->getRandomPath();
-	double tourLength = this->getTourLength(tempSolution);
+edges Tour::solveRandomWithSwitches(double maxLength, int maxTries) {
+	this->currentTour = std::make_shared< edges > (this->getRandomPath());
+	double tourLength = this->getTourLength(*currentTour);
 
 	int tries = 0;
 
-	//std::cout << "Original path: ";
-	//Tour::printPath(tempSolution);
-
 	while (tourLength > maxLength && ++tries <= maxTries)
 	{
-		std::pair<int, int> randomIndices = this->pickRand(tempSolution.size() - 1);
-		std::vector< Graph::Edge > newSolution = swap(tempSolution, randomIndices.first, randomIndices.second);
+		std::pair<int, int> randomIndices = this->pickRand(this->currentTour->size() - 1);
+		edges newSolution = swap(*(this->currentTour), randomIndices.first, randomIndices.second);
 		double newTourLength = this->getTourLength(newSolution);
 		if (newTourLength < tourLength)
 		{
 			tourLength = newTourLength;
-			tempSolution = newSolution;
-			//std::cout << "Attempt #" << tries << " found more optimal path of length " << newTourLength << std::endl;
+			this->currentTour = std::make_shared< edges > (newSolution);
 		}
-		//std::cout << "Try #" << tries << ": "; Tour::printPath(tempSolution);
 	}
 
-	return tempSolution;
+	return edges(*(this->currentTour));
 }
 
-std::vector< Graph::Edge > Tour::solveSimulatedAnnealing(double initialTemp, double finalTemp, double tempLoss) {
-	std::vector< Graph::Edge > tempSolution = this->getRandomPath();
-	double tourLength = this->getTourLength(tempSolution);
+edges Tour::solveSimulatedAnnealing(double initialTemp, double finalTemp, double tempLoss) {
+	this->currentTour = std::make_shared< edges > (this->getRandomPath());
+	double tourLength = this->getTourLength(*(this->currentTour));
 	double currentTemperature = initialTemp;
 
 	while (currentTemperature > finalTemp)
 	{
-		std::pair<int, int> randomIndices = this->pickRand(tempSolution.size() - 1);
-		std::vector< Graph::Edge > newSolution = swap(tempSolution, randomIndices.first, randomIndices.second);
+		std::pair<int, int> randomIndices = this->pickRand(this->currentTour->size() - 1);
+		std::vector< Graph::Edge > newSolution = swap(*(this->currentTour), randomIndices.first, randomIndices.second);
 		double newTourLength = this->getTourLength(newSolution);
 		if ( ( (double) rand() / (RAND_MAX) ) < (std::exp(tourLength - newTourLength) / currentTemperature) )
 		{
 			tourLength = newTourLength;
-			tempSolution = newSolution;
-			//std::cout << "Temp " << currentTemperature << " found more optimal path of length " << newTourLength << std::endl;
-			//Tour::printPath(tempSolution);
+			this->currentTour = std::make_shared< edges > (newSolution);
 		}
 
 		currentTemperature -= tempLoss;
 	}
 
-	//std::cout << "Final tour length of " << this->getTourLength(tempSolution) << std::endl;
-	return tempSolution;
+	return edges(*(this->currentTour));
 }
 
 void Tour::printPath(const std::vector< Graph::Edge > path) {

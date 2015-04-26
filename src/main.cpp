@@ -5,7 +5,7 @@
 int main(int argc, char* argv[]) {
 	Tour* tour;
 	if (argc == 1)
-		tour = new Tour(1000);
+		tour = new Tour(100);
 	else
 		tour = new Tour(std::stoi(argv[1]));
 	tour->printGraph();
