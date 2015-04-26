@@ -112,7 +112,7 @@ void Tour::printPath(const path path) {
 }
 
 Tour::~Tour() {
-	if (this->display.get() != NULL)
+	if (this->display)
 		this->display->kill();
 }
 
@@ -180,7 +180,9 @@ path Tour::swap(const path& tour, int firstVertex, int secondVertex) {
 }
 
 void Tour::updateDisplay(double temperature, double distance) {
+	this->display->accessTour.lock();
 	this->display->setCurrentTour(this->getCurrentTour());
 	this->display->temperature = temperature;
 	this->display->distance = distance;
+	this->display->accessTour.unlock();
 }

@@ -34,6 +34,7 @@ public:
 	void setCurrentTour(std::shared_ptr< path >);
 
 	double temperature, distance;
+	std::mutex accessTour;
 
 	virtual ~Display();
 private:
@@ -47,8 +48,6 @@ private:
 	std::vector< CityLocation > cities;
 	std::map < std::string, CityLocation > cityMap;
 	std::shared_ptr< path > currentTour;
-
-	std::mutex accessTour;
 };
 
 // Source: https://github.com/LaurentGomila/SFML/wiki/Source:-Line-segment-with-thickness
