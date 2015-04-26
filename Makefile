@@ -114,6 +114,30 @@ TSPRunner/fast:
 	$(MAKE) -f CMakeFiles/TSPRunner.dir/build.make CMakeFiles/TSPRunner.dir/build
 .PHONY : TSPRunner/fast
 
+src/display.o: src/display.cpp.o
+.PHONY : src/display.o
+
+# target to build an object file
+src/display.cpp.o:
+	$(MAKE) -f CMakeFiles/TSPRunner.dir/build.make CMakeFiles/TSPRunner.dir/src/display.cpp.o
+.PHONY : src/display.cpp.o
+
+src/display.i: src/display.cpp.i
+.PHONY : src/display.i
+
+# target to preprocess a source file
+src/display.cpp.i:
+	$(MAKE) -f CMakeFiles/TSPRunner.dir/build.make CMakeFiles/TSPRunner.dir/src/display.cpp.i
+.PHONY : src/display.cpp.i
+
+src/display.s: src/display.cpp.s
+.PHONY : src/display.s
+
+# target to generate assembly for a file
+src/display.cpp.s:
+	$(MAKE) -f CMakeFiles/TSPRunner.dir/build.make CMakeFiles/TSPRunner.dir/src/display.cpp.s
+.PHONY : src/display.cpp.s
+
 src/graph.o: src/graph.cpp.o
 .PHONY : src/graph.o
 
@@ -195,6 +219,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... TSPRunner"
+	@echo "... src/display.o"
+	@echo "... src/display.i"
+	@echo "... src/display.s"
 	@echo "... src/graph.o"
 	@echo "... src/graph.i"
 	@echo "... src/graph.s"
