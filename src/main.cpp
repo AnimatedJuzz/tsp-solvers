@@ -30,5 +30,7 @@ int main(int argc, char* argv[]) {
 	std::cout << "2-Opt Tour length: " << tour->getTourLength(twoOptSolution) << std::endl;
 	std::cout << "Simulated Annealing Solution: " << tour->getTourLength(simulatedAnnealingSolution) << std::endl;
 
+	tour->getDisplayThread()->join();
+
 	delete tour;
 }
