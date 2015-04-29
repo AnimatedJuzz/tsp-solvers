@@ -2,6 +2,20 @@
 #include "graph.h"
 #include "tour.h"
 
+
+/*
+ * Command-line arguments work as follows:
+ *
+ * TSPRunner [OPTIONS] -c [NUM_CITIES] -c [ALGORITHM]
+ *
+ * Options:
+ *  --no-gui	Disables SFML
+ *
+ * Algorithm shorthand:
+ * -r	Random
+ * -t	Two-Opt
+ * -s	Simulated Annealing
+ */
 int main(int argc, char* argv[]) {
 	Tour* tour;
 	if (argc == 1)
