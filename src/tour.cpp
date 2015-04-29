@@ -127,10 +127,11 @@ path Tour::getRandomPath() {
 
 	std::vector< int > verticesList(this->vertices.size());
 	std::iota(std::begin(verticesList), std::end(verticesList), 0);
-	std::random_shuffle(verticesList.begin(), verticesList.end());
+	std::random_shuffle(verticesList.begin() + 1, verticesList.end() - 1);
 
 	for (auto it = verticesList.begin(); it < verticesList.end() - 1; it++)
 		randomPath.push_back(this->graph[*it][*(it+1)]);
+	randomPath.push_back(this->graph[*(verticesList.end() - 1)][*(verticesList.begin())]);
 	return randomPath;
 }
 
