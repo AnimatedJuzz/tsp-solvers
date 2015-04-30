@@ -35,8 +35,11 @@ Tour::Tour(int numCities) : Graph(numCities), currentTour(new path) {
 		}
 	}
 
-	this->display = std::unique_ptr< Display > (new Display(cities, this->currentTour));
-	this->displayThread = std::unique_ptr< std::thread > (new std::thread(&Display::loop, std::ref( *(this->display) )));
+	if (!disableGUI)
+	{
+		this->display = std::unique_ptr< Display > (new Display(cities, this->currentTour));
+		this->displayThread = std::unique_ptr< std::thread > (new std::thread(&Display::loop, std::ref( *(this->display) )));
+	}
 }
 
 path Tour::solveRandom() {
@@ -51,6 +54,7 @@ path Tour::solveRandom() {
 		{
 			optimalDistance = tourLength;
 			this->currentTour = std::make_shared< path > (tempSolution);
+			updateDisplay();
 		}
 	}
 
@@ -72,6 +76,7 @@ path Tour::solveRandomWithSwitches(double maxLength, int maxTries) {
 		{
 			tourLength = newTourLength;
 			this->currentTour = std::make_shared< path > (newSolution);
+			updateDisplay();
 		}
 	}
 
@@ -185,6 +190,10 @@ path Tour::swap(const path& tour, int firstVertex, int secondVertex) {
 }
 
 void Tour::updateDisplay(double temperature, double distance) {
+
+	if (!this->display)
+		return;
+
 	this->display->accessTour.lock();
 	this->display->setCurrentTour(this->getCurrentTour());
 	this->display->temperature = temperature;

@@ -19,6 +19,8 @@ public:
 	Tour(int numCities);
 	~Tour();
 
+	static bool disableGUI;
+
 	double getTourLength(path& tour);
 
 	path solveRandom();
