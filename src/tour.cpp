@@ -56,6 +56,13 @@ Tour::Tour(std::string inputFileName) : Graph(), currentTour(new path) {
 		getToken();
 		skipWhitespace();
 		std::string dimensionString = getToken();
+
+		if (dimensionString == ":")
+		{
+			skipWhitespace();
+			dimensionString = getToken();
+		}
+
 		sizeOfGraph = std::stoi(dimensionString);
 		pos = nodeCoordSection;
 
