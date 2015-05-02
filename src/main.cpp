@@ -33,17 +33,6 @@ bool Tour::disableGUI = false;
 int main(int argc, char* argv[]) {
 	Tour* tour;
 
-	/*switch (argc)
-	{
-	case 2:
-		if (argv[1] == NUM_CITY_DELIMITER || argv[1] == ALGORITHM_DELIMITER)
-		{
-			std::cerr << "Insufficient arguments. " + correctUsage << std::endl;
-			return 1;
-		}
-		break;
-	}*/
-
 	// If the last argument was -c or -a
 	if (argv[argc - 1] == NUM_CITY_DELIMITER || argv[argc - 1] == ALGORITHM_DELIMITER)
 	{
