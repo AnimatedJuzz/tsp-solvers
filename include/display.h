@@ -21,6 +21,8 @@ public:
 	int maxWidth = 1100;
 	int maxHeight = 1100;
 
+	const double OFFSET = 0.08;
+
 	const std::string TITLE = "TSP Solver";
 
 	const int CITY_SIZE = 5;
