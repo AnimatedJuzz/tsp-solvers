@@ -17,7 +17,7 @@
  */
 
 const int DEFAULT_CITY_NUM = 100;
-const std::string correctUsage = "TSPRunner [OPTIONS] -c [NUM_CITIES] -a [ALGORITHM]";
+const std::string correctUsage = "TSPRunner [FILE_NAME] [OPTIONS] -c [NUM_CITIES] -a [ALGORITHM]";
 
 const std::string NUM_CITY_DELIMITER = "-c";
 const std::string ALGORITHM_DELIMITER = "-a";
@@ -33,7 +33,7 @@ bool Tour::disableGUI = false;
 int main(int argc, char* argv[]) {
 	Tour* tour;
 
-	switch (argc)
+	/*switch (argc)
 	{
 	case 2:
 		if (argv[1] == NUM_CITY_DELIMITER || argv[1] == ALGORITHM_DELIMITER)
@@ -42,16 +42,33 @@ int main(int argc, char* argv[]) {
 			return 1;
 		}
 		break;
+	}*/
+
+	// If the last argument was -c or -a
+	if (argv[argc - 1] == NUM_CITY_DELIMITER || argv[argc - 1] == ALGORITHM_DELIMITER)
+	{
+		std::cerr << "Insufficient arguments. " + correctUsage << std::endl;
+		return 1;
 	}
 
+	// If the NO_GUI flag was found
 	if (std::find(argv, argv + argc, NO_GUI) != argv + argc)
 	{
 		std::cout << "GUI disabled" << std::endl;
 		Tour::disableGUI = true;
-		// Actually disable the GUI here
 	}
+
+	// If the NUM_CITY flag was given
 	if (std::find(argv, argv + argc, NUM_CITY_DELIMITER) != argv + argc)
 	{
+		// If the NUM_CITY flag was given in conjunction with the city list argument
+		if (argv[1] != ALGORITHM_DELIMITER && argv[1] != NO_GUI)
+		{
+			std::cerr << "Incorrect usage. " + correctUsage << std::endl;
+			return 1;
+		}
+
+		// Try to parse the argument after the -c flag
 		try {
 			int numCities = std::stoi(*(std::find(argv, argv + argc, NUM_CITY_DELIMITER) + 1));
 			tour = new Tour(numCities);
@@ -63,8 +80,17 @@ int main(int argc, char* argv[]) {
 	}
 	else
 	{
-		std::cout << "Defaulting to 100 cities" << std::endl;
-		tour = new Tour(DEFAULT_CITY_NUM);
+		// If a city list was provided
+		if (argc > 1 && argv[1] != ALGORITHM_DELIMITER && argv[1] != NO_GUI)
+		{
+			std::cout << "Reading from file " << argv[1] << std::endl;
+			tour = new Tour(argv[1]);
+		}
+		else
+		{
+			std::cout << "Defaulting to 100 cities" << std::endl;
+			tour = new Tour(DEFAULT_CITY_NUM);
+		}
 	}
 
 	path * solution;

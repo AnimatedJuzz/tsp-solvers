@@ -18,8 +18,8 @@ public:
 	const int WIDTH = 1280;
 	const int HEIGHT = 720;
 
-	const int SCALED_WIDTH = 1100;
-	const int SCALED_HEIGHT = 1100;
+	int maxWidth = 1100;
+	int maxHeight = 1100;
 
 	const std::string TITLE = "TSP Solver";
 

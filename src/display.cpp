@@ -90,8 +90,8 @@ void Display::setCurrentTour(std::shared_ptr< path > currentTour) {
 }
 
 sf::Vector2f const Display::transformCoordinateSystem(const sf::Vector2f& coords) {
-	return sf::Vector2f ((coords.x / ((float) SCALED_WIDTH) ) * WIDTH,
-			(1.0 - (coords.y / ((float) SCALED_HEIGHT)) ) * HEIGHT);
+	return sf::Vector2f ((coords.x / ((float) maxWidth) ) * WIDTH,
+			(1.0 - (coords.y / ((float) maxHeight)) ) * HEIGHT);
 }
 
 Display::~Display() {

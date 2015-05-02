@@ -2,6 +2,8 @@
 #define GRAPH_H
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <iomanip>
 #include <vector>
 #include <map>
@@ -19,6 +21,11 @@ static int CURRENT_VAL = 0;
 class Graph {
 
 public:
+
+	const std::string DIMENSION = "DIMENSION";
+	const std::string EDGE_WEIGHT_TYPE = "EUC_2D";
+	const std::string NODE_COORD_SECTION = "NODE_COORD_SECTION";
+	const std::string EOF_LABEL = "EOF";
 
 	typedef struct Name {
 		std::string val;
@@ -61,7 +68,7 @@ public:
 	} Edge;
 
 	Graph();
-	Graph(int numVertices);
+	Graph(int& numVertices);
 	virtual ~Graph() { };
 	void addVertex(const Vertex& vertex);
 	void addEdge(int distance, const Vertex& startVertex, const Vertex& endVertex);

@@ -2,7 +2,7 @@
 
 Graph::Graph() : graph(), search(), numVertices(0) { }
 
-Graph::Graph(int numVertices) :
+Graph::Graph(int& numVertices) :
 		graph(),
 		search(),
 		numVertices(numVertices),

@@ -23,22 +23,72 @@ Tour::Tour(int numCities) : Graph(numCities), currentTour(new path) {
 		cities.push_back(location);
 	}
 
-	// Populate graph with their distances
-	for (auto startCity = cities.begin(); startCity < cities.end(); startCity++)
-	{
-		for (auto endCity = startCity + 1; endCity < cities.end(); endCity++)
-		{
-			double distance = std::sqrt(std::pow(endCity->second.x - startCity->second.x, 2) +
-					std::pow(endCity->second.y - startCity->second.y, 2));
-			this->changeEdgeWeight(distance, this->getVertex(startCity - cities.begin()),
-					this->getVertex(endCity - cities.begin()));
-		}
-	}
+	this->populateGraph(cities);
+}
 
-	if (!disableGUI)
+Tour::Tour(std::string inputFileName) : Graph(), currentTour(new path) {
+	std::string file;
+	std::ifstream inputFile(inputFileName);
+
+	std::stringstream buffer;
+	buffer << inputFile.rdbuf();
+
+	file = buffer.str();
+
+	std::size_t dimension = file.find(Graph::DIMENSION);
+	std::size_t edgeWeightType = file.find(EDGE_WEIGHT_TYPE);
+	std::size_t nodeCoordSection = file.find(NODE_COORD_SECTION);
+
+	if (dimension == std::string::npos || edgeWeightType == std::string::npos || nodeCoordSection == std::string::npos)
 	{
-		this->display = std::unique_ptr< Display > (new Display(cities, this->currentTour));
-		this->displayThread = std::unique_ptr< std::thread > (new std::thread(&Display::loop, std::ref( *(this->display) )));
+		std::string invalid = "Invalid input file";
+		std::cerr << invalid << std::endl;
+		throw invalid;
+	}
+	else
+	{
+		std::size_t pos = dimension;
+		auto skipUntilNewline = [&] () { do pos++; while(file[pos] != '\n'); };
+		auto skipWhitespace = [&] () { while (file[pos] == ' ' || file[pos] == '\n') pos++; };
+		auto getToken = [&] () { std::string token; while (file[pos] != ' ' && file[pos] != '\n') token += file[pos++]; return token; };
+		int sizeOfGraph;
+
+		getToken();
+		skipWhitespace();
+		std::string dimensionString = getToken();
+		sizeOfGraph = std::stoi(dimensionString);
+		pos = nodeCoordSection;
+
+		std::vector< std::unique_ptr< Vertex > > vertexList;
+		std::vector< CityLocation > cities(sizeOfGraph);
+
+		int xMax, yMax = 0;
+
+		skipUntilNewline();
+		while (pos < file.length())
+		{
+			skipWhitespace();
+			std::string token = getToken();
+
+			if (token == Graph::EOF_LABEL)
+				break;
+
+			int nodeNumber = std::stoi(token) - 1;
+			skipWhitespace();
+			int x1 = std::stoi(getToken());
+			skipWhitespace();
+			int y1 = std::stoi(getToken());
+
+			if (x1 > xMax)
+				xMax = x1;
+			if (y1 > yMax)
+				yMax = y1;
+
+			vertexList.push_back(std::unique_ptr<Graph::Vertex>(new Graph::Vertex(nodeNumber)));
+			this->addVertex(*vertexList[nodeNumber]);
+			cities[nodeNumber] = std::make_pair(vertexList[nodeNumber]->name, sf::Vector2f(x1, y1));
+		}
+		this->populateGraph(cities, xMax, yMax);
 	}
 }
 
@@ -125,6 +175,27 @@ Tour::~Tour() {
 		this->display->kill();
 }
 
+void Tour::populateGraph(std::vector< CityLocation > cities, int xMax, int yMax) {
+	// Populate graph with their distances
+	for (auto startCity = cities.begin(); startCity < cities.end(); startCity++)
+	{
+		for (auto endCity = startCity + 1; endCity < cities.end(); endCity++)
+		{
+			double distance = std::sqrt(std::pow(endCity->second.x - startCity->second.x, 2) +
+					std::pow(endCity->second.y - startCity->second.y, 2));
+			this->changeEdgeWeight(distance, this->getVertex(startCity - cities.begin()),
+					this->getVertex(endCity - cities.begin()));
+		}
+	}
+
+	if (!disableGUI)
+	{
+		this->display = std::unique_ptr< Display > (new Display(cities, this->currentTour));
+		this->display->maxWidth = xMax; this->display->maxHeight = yMax;
+		this->displayThread = std::unique_ptr< std::thread > (new std::thread(&Display::loop, std::ref( *(this->display) )));
+	}
+}
+
 path Tour::getRandomPath() {
 	srand (time(NULL));
 
@@ -146,7 +217,7 @@ double Tour::getTourLength(path& tour) {
 	return totalDist;
 }
 
-std::pair<int, int> Tour::pickRand(int size){
+std::pair<int, int> Tour::pickRand(int size) {
 	std::vector< int > elements(size);
 	std::iota(std::begin(elements), std::end(elements), 1);
 	std::random_shuffle(elements.begin(), elements.end());
