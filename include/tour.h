@@ -34,7 +34,7 @@ public:
 	static void printPath(const path path);
 
 private:
-	void populateGraph(std::vector< CityLocation > cities, int xMax=-1, int yMax=-1);
+	void populateGraph(std::vector< CityLocation > cities, double xMax=-1, double yMax=-1);
 	path getRandomPath();
 	std::pair<int, int> pickRand(int size);
 	path swap(const path& tour, int firstVertex, int secondVertex);

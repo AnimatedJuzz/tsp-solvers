@@ -69,7 +69,7 @@ Tour::Tour(std::string inputFileName) : Graph(), currentTour(new path) {
 		std::vector< std::unique_ptr< Vertex > > vertexList;
 		std::vector< CityLocation > cities(sizeOfGraph);
 
-		int xMax, yMax = 0;
+		double xMax, yMax = 0;
 
 		skipUntilNewline();
 		while (pos < file.length())
@@ -82,9 +82,9 @@ Tour::Tour(std::string inputFileName) : Graph(), currentTour(new path) {
 
 			int nodeNumber = std::stoi(token) - 1;
 			skipWhitespace();
-			int x1 = std::stoi(getToken());
+			double x1 = std::stod(getToken());
 			skipWhitespace();
-			int y1 = std::stoi(getToken());
+			double y1 = std::stod(getToken());
 
 			if (x1 > xMax)
 				xMax = x1;
@@ -182,7 +182,7 @@ Tour::~Tour() {
 		this->display->kill();
 }
 
-void Tour::populateGraph(std::vector< CityLocation > cities, int xMax, int yMax) {
+void Tour::populateGraph(std::vector< CityLocation > cities, double xMax, double yMax) {
 	// Populate graph with their distances
 	for (auto startCity = cities.begin(); startCity < cities.end(); startCity++)
 	{
