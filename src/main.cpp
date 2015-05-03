@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
 	if (std::find(argv, argv + argc, NUM_CITY_DELIMITER) != argv + argc)
 	{
 		// If the NUM_CITY flag was given in conjunction with the city list argument
-		if (argv[1] != ALGORITHM_DELIMITER && argv[1] != NO_GUI)
+		if (argv[1] == ALGORITHM_DELIMITER || argv[1] == NO_GUI)
 		{
 			std::cerr << "Incorrect usage. " + correctUsage << std::endl;
 			return 1;
