@@ -77,8 +77,11 @@ void Display::draw() {
 	distanceText.setColor(sf::Color::Black);
 	distanceText.setPosition(10, HEIGHT - 35);
 
-	this->window->draw(temp);
-	this->window->draw(distanceText);
+	if (temperature != -1.0)
+		this->window->draw(temp);
+
+	if (distance != -1.0)
+		this->window->draw(distanceText);
 }
 
 void Display::kill() {
