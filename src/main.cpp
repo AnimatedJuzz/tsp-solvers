@@ -17,7 +17,8 @@
  */
 
 const int DEFAULT_CITY_NUM = 100;
-const std::string correctUsage = "TSPRunner [FILE_NAME] [OPTIONS] -c [NUM_CITIES] -a [ALGORITHM]\n\n"
+const std::string correctUsage = "\nTSPRunner [FILE_NAME] [OPTIONS] -c [NUM_CITIES] -a [ALGORITHM]\n\n"
+		"Options:\n\n--nogui\tDisables GUI\n\n"
 		"Algorithms:\nr\tRandom Algorithm\nt\t2-Opt Algorithm\ns\tSimulated Annealing\n";
 
 const std::string NUM_CITY_DELIMITER = "-c";
