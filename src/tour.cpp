@@ -30,6 +30,9 @@ Tour::Tour(std::string inputFileName) : Graph(), currentTour(new path) {
 	std::string file;
 	std::ifstream inputFile(inputFileName);
 
+	if (!inputFile.is_open())
+		throw std::invalid_argument("File not found");
+
 	std::stringstream buffer;
 	buffer << inputFile.rdbuf();
 
@@ -43,7 +46,7 @@ Tour::Tour(std::string inputFileName) : Graph(), currentTour(new path) {
 	{
 		std::string invalid = "Invalid input file";
 		std::cerr << invalid << std::endl;
-		throw invalid;
+		throw std::invalid_argument(invalid);
 	}
 	else
 	{
