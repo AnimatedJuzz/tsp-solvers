@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) {
 		} else if (algorithm == ALGORITHM_TWO_OPT)
 		{
 			std::cout << "Using the 2-opt algorithm" << std::endl;
-			solution = new path(tour->solveRandomWithSwitches(3500.0, 500));
+			solution = new path(tour->solveRandomWithSwitches(3500.0, 2000));
 		} else if (algorithm == ALGORITHM_SIMULATED_ANNEALING)
 		{
 			std::cout << "Using simulated annealing" << std::endl;
