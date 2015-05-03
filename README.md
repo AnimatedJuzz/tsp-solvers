@@ -16,4 +16,18 @@ After obtaining the source run
 
 	make
 
+### Usage instructions
+
+>TSPRunner [CITY_LIST] [OPTIONS] -c [NUM_CITIES] -a [ALGORITHM]
+> 
+>  Options:
+>   --no-gui	Disables SFML
+> 
+>  Algorithm shorthand:
+>  r	Random
+>  t	Two-Opt
+>  s	Simulated Annealing
+
+Relevant city lists from the [TSPLIB](http://www.iwr.uni-heidelberg.de/groups/comopt/software/TSPLIB95/tsp/) project are provided in the assets/data directory. Optimal results have already been computed [here](http://www.iwr.uni-heidelberg.de/groups/comopt/software/TSPLIB95/STSP.html) .
+
 ![](http://i.imgur.com/wd91ApJ.gif)

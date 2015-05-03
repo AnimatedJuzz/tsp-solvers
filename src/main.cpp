@@ -5,7 +5,7 @@
 /*
  * Command-line arguments work as follows:
  *
- * TSPRunner [OPTIONS] -c [NUM_CITIES] -a [ALGORITHM]
+ * TSPRunner [CITY_LIST] [OPTIONS] -c [NUM_CITIES] -a [ALGORITHM]
  *
  * Options:
  *  --no-gui	Disables SFML
@@ -17,7 +17,7 @@
  */
 
 const int DEFAULT_CITY_NUM = 100;
-const std::string correctUsage = "\nTSPRunner [FILE_NAME] [OPTIONS] -c [NUM_CITIES] -a [ALGORITHM]\n\n"
+const std::string correctUsage = "\nTSPRunner [CITY_LIST] [FILE_NAME] [OPTIONS] -c [NUM_CITIES] -a [ALGORITHM]\n\n"
 		"Options:\n\n--nogui\tDisables GUI\n\n"
 		"Algorithms:\nr\tRandom Algorithm\nt\t2-Opt Algorithm\ns\tSimulated Annealing\n";
 
