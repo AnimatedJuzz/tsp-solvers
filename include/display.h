@@ -18,8 +18,10 @@ public:
 	const int WIDTH = 1280;
 	const int HEIGHT = 720;
 
-	int maxWidth = 1100;
-	int maxHeight = 1100;
+	const static int DEFAULT_SCALED_WIDTH = 1000;
+	const static int DEFAULT_SCALED_HEIGHT = 1000;
+
+	int maxWidth, maxHeight;
 
 	const double OFFSET = 0.08;
 

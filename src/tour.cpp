@@ -114,7 +114,7 @@ path Tour::solveRandom() {
 		{
 			optimalDistance = tourLength;
 			this->currentTour = std::make_shared< path > (tempSolution);
-			updateDisplay();
+			updateDisplay(-1.0, tourLength);
 		}
 	}
 
@@ -136,7 +136,7 @@ path Tour::solveRandomWithSwitches(double maxLength, int maxTries) {
 		{
 			tourLength = newTourLength;
 			this->currentTour = std::make_shared< path > (newSolution);
-			updateDisplay();
+			updateDisplay(-1.0, newTourLength);
 		}
 	}
 
@@ -201,7 +201,15 @@ void Tour::populateGraph(std::vector< CityLocation > cities, double xMax, double
 	if (!disableGUI)
 	{
 		this->display = std::unique_ptr< Display > (new Display(cities, this->currentTour));
-		this->display->maxWidth = xMax; this->display->maxHeight = yMax;
+
+		if (xMax == -1 || yMax == -1)
+		{
+			this->display->maxWidth = Display::DEFAULT_SCALED_WIDTH; this->display->maxHeight = Display::DEFAULT_SCALED_HEIGHT;
+		}
+		else
+		{
+			this->display->maxWidth = xMax; this->display->maxHeight = yMax;
+		}
 		this->displayThread = std::unique_ptr< std::thread > (new std::thread(&Display::loop, std::ref( *(this->display) )));
 	}
 }
