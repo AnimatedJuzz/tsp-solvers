@@ -273,6 +273,7 @@ path Tour::swap(const path& tour, int firstVertex, int secondVertex) {
 
 	route3.insert(route3.begin(), getEdge(vertices[firstVertex], vertices[secondVertex + 1]));
 
+	route1.reserve(route1.size() + route2.size() + route3.size());
 	route1.insert(route1.end(), route2.begin(), route2.end());
 	route1.insert(route1.end(), route3.begin(), route3.end());
 	return route1;
