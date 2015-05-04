@@ -1,6 +1,8 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
+#include "config.h"
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -10,6 +12,8 @@
 #include <cmath>
 #include <memory>
 #include <string>
+
+typedef std::pair <std::string, std::pair< float, float> > CityLocation;
 
 const int INDENT = 4;
 

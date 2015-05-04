@@ -1,4 +1,5 @@
 #include <iostream>
+#include "config.h"
 #include "graph.h"
 #include "tour.h"
 
@@ -48,6 +49,10 @@ int main(int argc, char* argv[]) {
 		std::cout << "GUI disabled" << std::endl;
 		Tour::disableGUI = true;
 	}
+
+	#ifndef SFML_FOUND
+	Tour::disableGUI = true;
+	#endif
 
 	// If the NUM_CITY flag was given
 	if (std::find(argv, argv + argc, NUM_CITY_DELIMITER) != argv + argc)

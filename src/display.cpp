@@ -1,3 +1,6 @@
+#include "config.h"
+
+#ifdef SFML_FOUND
 #include "display.h"
 
 Display::Display(const std::vector< CityLocation >& cities, std::shared_ptr <path> tour) :
@@ -103,3 +106,5 @@ Display::~Display() {
 	delete this->window;
 	delete this->font;
 }
+
+#endif

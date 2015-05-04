@@ -21,6 +21,8 @@ endforeach()
 if(SFML_FOUND)
   include_directories(${SFML_INCLUDE_DIR})
   target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES})
+else()
+  message(STATUS "SFML not found, disabling GUI")
 endif()
 
 target_compile_features(${EXECUTABLE_NAME} PRIVATE cxx_range_for)

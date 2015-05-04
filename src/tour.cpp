@@ -1,10 +1,3 @@
-/*
- * tour.cpp
- *
- *  Created on: Apr 12, 2015
- *      Author: srinivas
- */
-
 #include "tour.h"
 
 Tour::Tour() : Graph() { }
@@ -17,9 +10,9 @@ Tour::Tour(int numCities) : Graph(numCities), currentTour(new path) {
 	double multiplier = MAX_DIST_CITY - MIN_DIST_CITY;
 	for (int index = 0; index < numCities; index++)
 	{
-		CityLocation location = std::make_pair(this->vertices[index]->name, sf::Vector2f(
-				MIN_DIST_CITY + ((double) rand() / RAND_MAX) * multiplier,
-				MIN_DIST_CITY + ((double) rand() / RAND_MAX) * multiplier));
+		CityLocation location = std::make_pair(this->vertices[index]->name, std::make_pair(
+				MIN_DIST_CITY + ((float) rand() / RAND_MAX) * multiplier,
+				MIN_DIST_CITY + ((float) rand() / RAND_MAX) * multiplier));
 		cities.push_back(location);
 	}
 
@@ -96,7 +89,7 @@ Tour::Tour(std::string inputFileName) : Graph(), currentTour(new path) {
 
 			vertexList.push_back(std::unique_ptr<Graph::Vertex>(new Graph::Vertex(nodeNumber)));
 			this->addVertex(*vertexList[nodeNumber]);
-			cities[nodeNumber] = std::make_pair(vertexList[nodeNumber]->name, sf::Vector2f(x1, y1));
+			cities[nodeNumber] = std::make_pair(vertexList[nodeNumber]->name, std::make_pair(x1, y1));
 		}
 		this->populateGraph(cities, xMax, yMax);
 	}
@@ -181,8 +174,10 @@ void Tour::printPath(const path path) {
 }
 
 Tour::~Tour() {
+	#ifdef SFML_FOUND
 	if (this->display)
 		this->display->kill();
+	#endif
 }
 
 void Tour::populateGraph(std::vector< CityLocation > cities, double xMax, double yMax) {
@@ -191,13 +186,14 @@ void Tour::populateGraph(std::vector< CityLocation > cities, double xMax, double
 	{
 		for (auto endCity = startCity + 1; endCity < cities.end(); endCity++)
 		{
-			double distance = std::sqrt(std::pow(endCity->second.x - startCity->second.x, 2) +
-					std::pow(endCity->second.y - startCity->second.y, 2));
+			double distance = std::sqrt(std::pow(endCity->second.first - startCity->second.first, 2) +
+					std::pow(endCity->second.second - startCity->second.second, 2));
 			this->changeEdgeWeight(distance, this->getVertex(startCity - cities.begin()),
 					this->getVertex(endCity - cities.begin()));
 		}
 	}
 
+	#ifdef SFML_FOUND
 	if (!disableGUI)
 	{
 		this->display = std::unique_ptr< Display > (new Display(cities, this->currentTour));
@@ -212,6 +208,7 @@ void Tour::populateGraph(std::vector< CityLocation > cities, double xMax, double
 		}
 		this->displayThread = std::unique_ptr< std::thread > (new std::thread(&Display::loop, std::ref( *(this->display) )));
 	}
+	#endif
 }
 
 path Tour::getRandomPath() {
@@ -281,6 +278,7 @@ path Tour::swap(const path& tour, int firstVertex, int secondVertex) {
 
 void Tour::updateDisplay(double temperature, double distance) {
 
+	#ifdef SFML_FOUND
 	if (!this->display)
 		return;
 
@@ -289,4 +287,5 @@ void Tour::updateDisplay(double temperature, double distance) {
 	this->display->temperature = temperature;
 	this->display->distance = distance;
 	this->display->accessTour.unlock();
+	#endif
 }

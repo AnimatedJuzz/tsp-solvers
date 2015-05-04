@@ -1,9 +1,13 @@
 #ifndef TOUR_H
 #define TOUR_H
 
-#include "display.h"
-
+#include "config.h"
 #include <graph.h>
+
+#ifdef SFML_FOUND
+#include "display.h"
+#endif
+
 #include <algorithm>
 #include <cmath>
 #include <thread>
@@ -41,7 +45,11 @@ private:
 	void updateDisplay(double temperature=-1, double distance=-1);
 
 	std::shared_ptr< path > currentTour;
+
+	#ifdef SFML_FOUND
 	std::unique_ptr< Display > display;
+	#endif
+
 	std::unique_ptr< std::thread > displayThread;
 };
 

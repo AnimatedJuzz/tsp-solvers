@@ -1,6 +1,8 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
+#include "config.h"
+
 #include "graph.h"
 
 #include <SFML/Graphics.hpp>
@@ -9,8 +11,6 @@
 #include <iostream>
 #include <algorithm>
 #include <mutex>
-
-typedef std::pair <std::string, sf::Vector2f> CityLocation;
 
 class Display {
 public:
@@ -44,6 +44,9 @@ public:
 private:
 	void draw();
 	sf::Vector2f const transformCoordinateSystem(const sf::Vector2f& coords);
+	sf::Vector2f const transformCoordinateSystem(const std::pair<float, float> coords) {
+		return transformCoordinateSystem(sf::Vector2f(coords.first, coords.second));
+	};
 
 	bool running;
 	sf::RenderWindow * window;
